@@ -1,0 +1,6 @@
+def zeros(n):
+    col_zero = 0
+    while n // 5 != 0:
+        col_zero = col_zero + n // 5
+        n = n // 5
+    return col_zero
