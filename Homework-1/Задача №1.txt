@@ -1,0 +1,8 @@
+def domain_name(url):
+    domain_list = url.replace('.', '//').split('//')
+    for i in range(len(domain_list)-1, -1, -1):
+        if domain_list[i] == 'http:' \
+                or domain_list[i] == 'www' \
+                or domain_list[i] == 'https:':
+            del domain_list[i]
+    return f'{domain_list[0]}'
