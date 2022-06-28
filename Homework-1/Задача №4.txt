@@ -1,0 +1,11 @@
+from itertools import combinations
+def bananas(s):
+    result = []
+    for i in combinations(range(len(s)), len(s)-6):
+        banan = list(s)
+        for j in i:
+            banan[j] = '-'
+        banan = ''.join(banan)
+        if banan.replace('-', '') == 'banana':
+            result.append(banan)
+    return set(result)
