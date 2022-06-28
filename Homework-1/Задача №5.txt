@@ -1,0 +1,14 @@
+from itertools import combinations_with_replacement
+from math import prod
+def count_find_num(primesL: list, limit: int) -> list:
+    result = []
+    for i in range(len(primesL), 30):
+        for x in combinations_with_replacement(primesL, i):
+            if set(primesL) == set(x):
+                find_num = prod(x)
+                if find_num <= limit:
+                    result.append(find_num)
+    if len(result) == 0:
+        return []
+    else:
+        return [len(result), max(result)]
