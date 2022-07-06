@@ -1,0 +1,34 @@
+from itertools import permutations
+from math import hypot as hp
+
+def cut(x1: tuple, x2: tuple) -> float:
+    return hp(x2[0] - x1[0], x2[1] - x1[1])
+
+def any_ways(coordinates: tuple) -> set:
+    new_ways = set()
+    ways = set()
+    for way in permutations(coordinates, len(coordinates)):
+        new_ways.add(way)
+        if way[::-1] not in new_ways:
+            ways.add(way)
+    return ways
+
+def short_cut(coordinates: tuple) -> str:
+    num_coordinates = len(coordinates)
+    if num_coordinates <= 1:
+        return "Enter more coordinates, min 2"
+    ways = any_ways(coordinates[1:])
+    fin_coordinate = coordinates[0]
+    shortest_way = []
+    for way in ways:
+        way_length = 0
+        next_coordinate = fin_coordinate
+        result = f"{next_coordinate}"
+        for coordinate in (way + (fin_coordinate, )):
+            road = cut(next_coordinate, coordinate)
+            way_length += road
+            result += f" -> {coordinate}[{road}]"
+            next_coordinate = coordinate
+        if not shortest_way or shortest_way[0] > way_length:
+            shortest_way = [way_length, result]
+    return f"{shortest_way[1]} = {shortest_way[0]}"
