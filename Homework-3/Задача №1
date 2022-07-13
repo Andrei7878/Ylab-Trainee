@@ -1,0 +1,31 @@
+from collections.abc import Iterable, Sequence
+
+class CyclicIterator:
+    def __init__(self, value: Iterable):
+        if self.charter(value):
+            self.value = value
+        else:
+            self.value = sorted(value)
+
+    def __iter__(self):
+        self.current_index = -1
+        return self
+
+    def __next__(self):
+        if self.current_index < len(self.value) - 1:
+            self.current_index += 1
+            return self.value[self.current_index]
+        else:
+            self.current_index = 0
+            return self.value[self.current_index]
+
+    @staticmethod
+    def charter(value):
+        if isinstance(value, Sequence):
+            return True
+        return False
+
+if __name__ == '__main__':
+    endless_cycle = CyclicIterator()
+    for i in endless_cycle:
+        print(i)
