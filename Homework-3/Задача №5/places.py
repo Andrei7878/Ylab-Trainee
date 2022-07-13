@@ -1,14 +1,17 @@
 from abc import abstractmethod, ABC
 
+
 class Place(ABC):
     @abstractmethod
     def get_antagonist(self):
         """The antagonist"""
 
+
 class Kostroma(Place):
     city_name = 'Kostroma'
     def get_antagonist(self):
         print('Orcs hid in the forest')
+
 
 class Tokyo(Place):
     city_name = 'Tokyo'
