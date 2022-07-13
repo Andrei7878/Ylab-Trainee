@@ -1,6 +1,7 @@
 from heroes import SuperHero
 from places import Place
 
+
 class Massmedia:
     def __init__(self, hero: SuperHero, place: Place):
         self.__place_name = self.get_place_name(place)
