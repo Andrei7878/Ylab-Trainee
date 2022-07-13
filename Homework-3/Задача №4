@@ -18,7 +18,7 @@ def repeat(
                 func_result = func(*args, **kwargs)
                 print(f"Запуск номер {i}. Ожидание: {interval}секунд . "
                       f"Результат декорируемой функций = {func_result}.")
-                interval *= 2 ** factor
+                interval *= factor
                 if interval >= border_sleep_time:
                     interval = border_sleep_time
             print("Конец работы")
@@ -27,7 +27,7 @@ def repeat(
     return wrapper
 
 if __name__ == "__main__":
-    @repeat(call_count=3, start_sleep_time=1, factor=2, border_sleep_time=8)
+    @repeat(call_count=6, start_sleep_time=1, factor=2, border_sleep_time=16)
     def multiplier(number: int):
         return number * 2
     multiplier(2)
