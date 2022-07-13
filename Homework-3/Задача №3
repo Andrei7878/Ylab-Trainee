@@ -1,0 +1,42 @@
+import redis
+from functools import wraps
+from typing import Union
+
+
+def cached(redis_customer: Union[bool, redis.Redis] = False):
+    if redis_customer:
+        cach = redis_customer
+    else:
+        cach = {}
+
+    def wrapper(func):
+        @wraps(func)
+        def starter(arg):
+            cached_result = cach.get(arg)
+            if cached_result is None:
+                print("Caching in progress...")
+                cached_result = func(arg)
+                if redis_customer:
+                    cach.set(name=arg, value=cached_result)
+                else:
+                    cach[arg] = cached_result
+            else:
+                cached_result = int(cached_result)
+                print("End caching...")
+            print(f"Result is {cached_result}")
+            return cached_result
+        return starter
+    return wrapper
+
+if __name__ == '__main__':
+    customer = redis.Redis()
+
+    @cached(customer)
+    def multiplier(number: int):
+        return number * 2
+    multiplier(4)
+    multiplier(4)
+    multiplier(2)
+    multiplier(4)
+    multiplier(2)
+    customer.close()
